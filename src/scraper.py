@@ -11,21 +11,21 @@ def extract_laptops():
     response = requests.get(URL_TARGET, headers=headers, timeout=10)
     if response.status_code != 200:
         raise ConnectionError(f"Error HTTP {response.status_code}")
-        
+
     soup = BeautifulSoup(response.text, "html.parser")
     productos = []
     cards = soup.select("div.thumbnail")
-    
+
     for card in cards:
         titulo_el = card.select_one("a.title")
         precio_el = card.select_one(".price")
         desc_el = card.select_one(".description")
-        
+
         titulo = titulo_el.get("title") if titulo_el and titulo_el.has_attr("title") else (titulo_el.text.strip() if titulo_el else "N/A")
         precio = precio_el.text.strip() if precio_el else "N/A"
         desc = desc_el.text.strip() if desc_el else "N/A"
         link = "https://webscraper.io" + titulo_el["href"] if titulo_el and titulo_el.has_attr("href") else "N/A"
-        
+
         productos.append({
             "Herramienta": "BeautifulSoup-DevOps",
             "Titulo": titulo,
