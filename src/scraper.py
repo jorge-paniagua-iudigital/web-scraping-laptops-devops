@@ -1,16 +1,22 @@
+import os
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-URL_TARGET = "https://webscraper.io/test-sites/e-commerce/static/computers/laptops"
+# Variable de entorno con valor por defecto
+URL_TARGET = os.getenv(
+    "TARGET_URL",
+    "https://webscraper.io/test-sites/e-commerce/static/computers/laptops"
+)
 
 def extract_laptops():
+    """Extrae el catálogo de portátiles desde la URL configurada en el entorno."""
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     response = requests.get(URL_TARGET, headers=headers, timeout=10)
     if response.status_code != 200:
-        raise ConnectionError(f"Error HTTP {response.status_code}")
+        raise ConnectionError(f"Error HTTP {response.status_code} al conectar con {URL_TARGET}")
 
     soup = BeautifulSoup(response.text, "html.parser")
     productos = []
@@ -27,7 +33,7 @@ def extract_laptops():
         link = "https://webscraper.io" + titulo_el["href"] if titulo_el and titulo_el.has_attr("href") else "N/A"
 
         productos.append({
-            "Herramienta": "BeautifulSoup-DevOps",
+            "Herramienta": "BeautifulSoup-Cloud",
             "Titulo": titulo,
             "Precio": precio,
             "Descripcion": desc,
