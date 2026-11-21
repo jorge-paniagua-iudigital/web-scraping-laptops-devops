@@ -101,4 +101,4 @@ La aplicación está diseñada para ejecutarse en plataformas PaaS (como **Rende
 
 * **Comando de construcción (*Build Command*):** `pip install -r requirements.txt`
 * **Comando de inicio (*Start Command*):** `gunicorn app:app`
-* **URL de Producción:** *(Se actualizará con el enlace activo tras completar el despliegue)*
+* **URL de Producción:** https://web-scraping-laptops-devops.onrender.com
